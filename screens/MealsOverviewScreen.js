@@ -11,8 +11,17 @@ export default function MealsOverviewScreen({ route }) {
   })
 
   const renderMealItem = (itemData) => {
+    const {item} = itemData
+    
+    const mealItemsProps = {
+      title: item.title,
+      imageUrl: item.imageUrl,
+      duration: item.duration,
+      complexity: item.complexity,
+      affordability: item.affordability
+    }
     return (
-      <MealItem title={itemData.item.title} />
+      <MealItem {...mealItemsProps} />
     )
   }
 
