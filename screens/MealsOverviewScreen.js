@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useLayoutEffect } from 'react'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
-import { MEALS } from '../data/dummy-data';
+import { MEALS, CATEGORIES } from '../data/dummy-data';
 import MealItem from '../components/MealItem';
 
-export default function MealsOverviewScreen({ route }) {
+export default function MealsOverviewScreen({ route, navigation }) {
   const { categoryId } = route.params;
 
   const displayedMeals = MEALS.filter((meal) => {
@@ -14,6 +14,7 @@ export default function MealsOverviewScreen({ route }) {
     const {item} = itemData
     
     const mealItemsProps = {
+      id: item.id,
       title: item.title,
       imageUrl: item.imageUrl,
       duration: item.duration,
@@ -24,6 +25,13 @@ export default function MealsOverviewScreen({ route }) {
       <MealItem {...mealItemsProps} />
     )
   }
+
+  useLayoutEffect(() => {
+    const categoryTitle = CATEGORIES.find((category) => category.id === categoryId)
+
+    navigation.setOptions({ title: categoryTitle })
+
+  }, [categoryId, navigation])
 
   return (
     <View style={styles.container}>
